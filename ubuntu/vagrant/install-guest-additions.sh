@@ -1,11 +1,12 @@
 #!/bin/bash
-GUEST_ADDITION_VERSION=5.2.4
+export DEBIAN_FRONTEND=noninteractive
+GUEST_ADDITION_VERSION=6.1.32
 GUEST_ADDITION_ISO=VBoxGuestAdditions_${GUEST_ADDITION_VERSION}.iso
 GUEST_ADDITION_MOUNT=/media/VBoxGuestAdditions
 
-apt-get install linux-headers-$(uname -r) build-essential dkms
+apt-get install -y -qq -o=Dpkg::Use-Pty=0  linux-headers-$(uname -r) build-essential dkms bzip2
 
-wget http://download.virtualbox.org/virtualbox/${GUEST_ADDITION_VERSION}/${GUEST_ADDITION_ISO}
+wget -q http://download.virtualbox.org/virtualbox/${GUEST_ADDITION_VERSION}/${GUEST_ADDITION_ISO}
 mkdir -p ${GUEST_ADDITION_MOUNT}
 mount -o loop,ro ${GUEST_ADDITION_ISO} ${GUEST_ADDITION_MOUNT}
 sh ${GUEST_ADDITION_MOUNT}/VBoxLinuxAdditions.run
